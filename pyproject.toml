@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "skin-lesion-transunet"
+version = "1.0.0"
+description = "TensorFlow U-Net and TransUNet comparison for ISIC 2018 lesion segmentation"
+readme = "README.md"
+requires-python = ">=3.9,<3.12"
+license = {file = "LICENSE"}
+dependencies = [
+  "numpy>=1.23.5,<2",
+  "opencv-python-headless>=4.8,<5",
+  "pandas>=1.5,<3",
+  "Pillow>=10,<13",
+  "scikit-learn>=1.2,<2",
+  "tensorflow>=2.12,<2.16",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4,<9", "ruff>=0.5,<1"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"

@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+.testenv/
+.testdeps/
+.test-*/
+.tmp/
+venv/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Data and generated artifacts
+data/*
+!data/README.md
+artifacts/
+logs/
+results/predictions/
+*.h5
+*.keras
+*.ckpt
+*.tflite
+*.onnx
+events.out.tfevents.*
+
+# Sensitive or unrelated documents
+*.pdf
+*.zip
+*.7z
