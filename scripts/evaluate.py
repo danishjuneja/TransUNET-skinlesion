@@ -8,8 +8,8 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from sklearn.metrics import accuracy_score, f1_score, jaccard_score, precision_score, recall_score
 import tensorflow as tf
+from sklearn.metrics import accuracy_score, f1_score, jaccard_score, precision_score, recall_score
 
 from skin_lesion_segmentation.data import discover_pairs, split_samples
 from skin_lesion_segmentation.metrics import dice_coefficient, dice_loss, soft_iou
@@ -47,7 +47,7 @@ def main():
         mask = cv2.imread(str(sample.mask), cv2.IMREAD_GRAYSCALE)
         mask = cv2.resize(mask, (args.image_size, args.image_size), interpolation=cv2.INTER_NEAREST)
         expected = (mask >= 128).astype("uint8").ravel()
-        predicted = (model.predict(image[None, ...], verbose=0)[0, ..., 0] >= args.threshold)
+        predicted = model.predict(image[None, ...], verbose=0)[0, ..., 0] >= args.threshold
         predicted = predicted.astype("uint8").ravel()
         rows.append(
             {
@@ -70,4 +70,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

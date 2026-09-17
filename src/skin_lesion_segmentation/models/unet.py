@@ -34,4 +34,3 @@ def build_unet(image_size: int = 256, base_filters: int = 64) -> tf.keras.Model:
 
     outputs = tf.keras.layers.Conv2D(1, 1, activation="sigmoid", name="mask")(x)
     return tf.keras.Model(inputs, outputs, name="UNet")
-

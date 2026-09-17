@@ -81,6 +81,23 @@ missing a lesion region is more costly than modest over-segmentation, this
 trade-off may be desirable; any clinical interpretation would still require a
 properly controlled validation study.
 
+## Architecture complexity and inference cost
+
+A separate data-free benchmark compared the full models using an untrained
+batch-one synthetic tensor at 256 x 256. On a Windows development machine with
+16 logical CPUs, TensorFlow 2.15.1 was restricted to four intra-op threads and
+one inter-op thread. Five passes were used for warm-up and 20 for measurement.
+
+| Model | Parameters | FP32 parameter memory | Median CPU latency | p95 latency |
+|---|---:|---:|---:|---:|
+| U-Net | 31.05M | 118.44 MiB | 750.2 ms | 786.5 ms |
+| TransUNet | 100.89M | 384.85 MiB | 1,149.1 ms | 1,208.2 ms |
+
+TransUNet therefore required about 3.25 times the parameter memory and 1.53
+times the median inference time in this setup. These measurements are useful
+for comparing architecture cost, but they are not mobile-device or production
+latency claims. They are also independent of the historical quality experiment.
+
 ## Engineering improvements in this repository
 
 1. Replaced hard-coded Windows paths with CLI arguments and `pathlib` paths.
@@ -121,4 +138,3 @@ rather than accuracy alone.
 > lesion segmentation; archived holdout evaluation improved mean pixel recall
 > from 77.3% to 94.4% (+17.1 percentage points), with reproducible data-pairing,
 > evaluation, and result-provenance tooling.
-

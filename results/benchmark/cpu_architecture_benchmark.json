@@ -1,0 +1,50 @@
+{
+  "benchmark_type": "architecture-only synthetic-input CPU benchmark",
+  "trained_weights_used": false,
+  "dataset_used": false,
+  "input_shape": [
+    1,
+    256,
+    256,
+    3
+  ],
+  "warmup_iterations": 5,
+  "measured_iterations": 20,
+  "tensorflow_version": "2.15.1",
+  "python_version": "3.11.16",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "processor": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+  "logical_cpu_count": 16,
+  "tensorflow_intra_op_threads": 4,
+  "tensorflow_inter_op_threads": 1,
+  "models": {
+    "U-Net": {
+      "total_parameters": 31049409,
+      "trainable_parameters": 31037633,
+      "non_trainable_parameters": 11776,
+      "fp32_parameter_memory_mib": 118.44409561157227,
+      "latency_ms": {
+        "median": 750.1926500117406,
+        "mean": 741.102874999342,
+        "p95": 786.5168099975563,
+        "minimum": 676.5455999993719,
+        "maximum": 787.2446999826934
+      },
+      "throughput_fps_from_median": 1.3329909323749705
+    },
+    "TransUNet": {
+      "total_parameters": 100886161,
+      "trainable_parameters": 100859345,
+      "non_trainable_parameters": 26816,
+      "fp32_parameter_memory_mib": 384.8501625061035,
+      "latency_ms": {
+        "median": 1149.0543999971123,
+        "mean": 1155.9091600036481,
+        "p95": 1208.2291300204815,
+        "minimum": 1103.851800027769,
+        "maximum": 1236.8190000124741
+      },
+      "throughput_fps_from_median": 0.8702808152534058
+    }
+  }
+}

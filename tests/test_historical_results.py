@@ -1,8 +1,7 @@
 import csv
+import unittest
 from pathlib import Path
 from statistics import fmean
-import unittest
-
 
 ROOT = Path(__file__).parents[1]
 

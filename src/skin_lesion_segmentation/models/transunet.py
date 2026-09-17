@@ -7,7 +7,7 @@ THIRD_PARTY_NOTICES.md.
 from __future__ import annotations
 
 import math
-from typing import Sequence
+from collections.abc import Sequence
 
 import tensorflow as tf
 
@@ -122,9 +122,7 @@ def build_transunet(
     tokens = AddPositionEmbeddings(name="position_embeddings")(tokens)
     tokens = tf.keras.layers.Dropout(dropout)(tokens)
     for index in range(transformer_layers):
-        tokens = TransformerBlock(heads, mlp_dim, dropout, name=f"transformer_{index}")(
-            tokens
-        )
+        tokens = TransformerBlock(heads, mlp_dim, dropout, name=f"transformer_{index}")(tokens)
     tokens = tf.keras.layers.LayerNormalization(epsilon=1e-6, name="encoder_norm")(tokens)
 
     token_count = int(tokens.shape[1])
@@ -139,4 +137,3 @@ def build_transunet(
 
     outputs = tf.keras.layers.Conv2D(1, 1, activation="sigmoid", name="mask")(x)
     return tf.keras.Model(inputs, outputs, name="TransUNet")
-

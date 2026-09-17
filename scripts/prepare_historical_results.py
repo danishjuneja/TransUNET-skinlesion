@@ -10,7 +10,6 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-
 METRICS = ("accuracy", "f1", "jaccard", "recall", "precision")
 
 
@@ -48,9 +47,7 @@ def main():
     for model, rows in models.items():
         filename = model.lower().replace("-", "").replace(" ", "_") + "_per_image.csv"
         write_rows(args.output / filename, rows)
-        means = {
-            metric: float(np.mean([row[metric] for row in rows])) for metric in METRICS
-        }
+        means = {metric: float(np.mean([row[metric] for row in rows])) for metric in METRICS}
         summary[model] = {"n": len(rows), **means}
     (args.output / "summary.json").write_text(
         json.dumps(summary, indent=2) + "\n", encoding="utf-8"

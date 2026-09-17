@@ -54,9 +54,7 @@ def main():
         mask = np.asarray(mask_image)
         lesion_color = rng.integers(35, 110, 3, dtype="uint8")
         image = np.where(mask[..., None] > 0, lesion_color, base)
-        image = Image.fromarray(image.astype("uint8")).filter(
-            ImageFilter.GaussianBlur(radius=2)
-        )
+        image = Image.fromarray(image.astype("uint8")).filter(ImageFilter.GaussianBlur(radius=2))
         image.save(image_dir / f"{image_id}.jpg", quality=90)
         mask_image.save(mask_dir / f"{image_id}_segmentation.png")
     print(f"Generated {args.samples} synthetic pairs in {args.output}")

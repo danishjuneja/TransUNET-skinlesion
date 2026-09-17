@@ -45,6 +45,28 @@ medical segmentation: TransUNet missed fewer lesion pixels but produced more
 false-positive pixels than U-Net. See [`REPORT.md`](REPORT.md) for methodology,
 limitations, and interpretation.
 
+### Architecture complexity and CPU inference
+
+The full 256 x 256 models were also benchmarked with batch size one and a
+synthetic input tensor. No dataset or trained weights are needed for this
+architecture-only comparison.
+
+| Model | Parameters | FP32 parameter memory | Median latency | p95 latency | Throughput |
+|---|---:|---:|---:|---:|---:|
+| U-Net | 31.05M | 118.44 MiB | 750.2 ms | 786.5 ms | 1.33 FPS |
+| TransUNet | 100.89M | 384.85 MiB | 1,149.1 ms | 1,208.2 ms | 0.87 FPS |
+
+On this CPU configuration, TransUNet used about 3.25x the FP32 parameter memory
+and had 1.53x the median latency of U-Net. This complements the historical
+quality results by making the accuracy-efficiency trade-off visible.
+
+The benchmark used TensorFlow 2.15.1, Python 3.11.16, Windows, four TensorFlow
+intra-op threads, one inter-op thread, five warm-up passes, and 20 measured
+passes on a machine with 16 logical CPUs. Results are development-machine
+measurements, not mobile or production-performance claims. Full precision and
+environment metadata are stored in
+[`results/benchmark/cpu_architecture_benchmark.json`](results/benchmark/cpu_architecture_benchmark.json).
+
 ## Architecture
 
 ```text
@@ -87,6 +109,12 @@ Run the tests and build both models:
 ```bash
 pytest
 python scripts/smoke_test_models.py
+```
+
+Reproduce the data-free architecture benchmark:
+
+```bash
+python scripts/benchmark_models.py --warmup 5 --iterations 20 --threads 4
 ```
 
 Create a small, fully synthetic dataset for pipeline testing:
@@ -135,6 +163,7 @@ src/skin_lesion_segmentation/  reusable data, metric, and model code
 scripts/                       train, evaluate, smoke-test, and demo utilities
 tests/                         data-pairing and historical-result regression tests
 results/historical/            sanitized per-image metrics and summary
+results/benchmark/             data-free complexity and CPU latency benchmark
 docs/assets/                   compact figures retained from the archived run
 data/README.md                 dataset layout and provenance notes
 ```
@@ -155,4 +184,3 @@ data/README.md                 dataset layout and provenance notes
 2. Ronneberger et al., [*U-Net: Convolutional Networks for Biomedical Image Segmentation*](https://arxiv.org/abs/1505.04597), 2015.
 3. Codella et al., [*Skin Lesion Analysis Toward Melanoma Detection 2018*](https://arxiv.org/abs/1902.03368), 2019.
 4. TensorFlow implementation adapted from [awsaf49/TransUNet-tf](https://github.com/awsaf49/TransUNet-tf); see [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
-

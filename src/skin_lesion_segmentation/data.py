@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from pathlib import Path
 import random
 import re
-from typing import Iterable, Sequence
-
+from collections.abc import Iterable, Sequence
+from dataclasses import dataclass
+from pathlib import Path
 
 _IMAGE_ID = re.compile(r"(ISIC_\d{7})", re.IGNORECASE)
 
